@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>Registro de Usuario</h3>
+<form method="POST" id = "registro_form" action="">
+    {% csrf_token %}
+    {{ form.email.label }}
+    {{ form.email }}
+    {{ form.nombre.label }}
+    {{ form.nombre }}
+    {{ form.apellido.label }}
+    {{ form.apellido }}
+    {{ form.fechaNacimiento.label }}
+    {{ form.fechaNacimiento }}
+    {{ form.sexo.label }}
+    {{ form.sexo }}
+    {{ form.password1.label }}
+    {{ form.password1 }}
+    {{ form.password2.label }}
+    {{ form.password2 }}
+
+    <input type="submit" name="Crear cuenta">
+</form>
+    {{ form.erros }}
+    <a href="{% url 'logearse' %}">Ya tienes cuenta?</a>
+</div>
+{% endblock %}
