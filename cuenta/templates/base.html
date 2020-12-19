@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}My amazing site{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container{
+        padding-top: 2%;
+    }
+    h3 {
+        text-align: center;
+    }
+
+    .topnav {
+      overflow: hidden;
+      background-color: #444;
+    }
+
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="{% url 'inicio' %}"><img class="img-responsive" width="100px" src="{% static 'cuenta/logo.png' %}"></a>
+        <a href="#news">Buscar</a>
+        <a href="{% url 'registrar' %}">Registrarte</a>
+        <a href="{% url 'logearse' %}">Log In</a>
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <br>
+    <br>
+    <div id="footer">
+        <div class="text-center p-3" style="background-color: #444; color: white;">
+            © 2020 Copyright: WatchAll
+        </div>
+    </div>
+</body>
+</html>

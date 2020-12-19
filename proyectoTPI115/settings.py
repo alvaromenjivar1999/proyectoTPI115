@@ -25,12 +25,14 @@ SECRET_KEY = 'gwmhb5obrqvtm00-wi(ssen*w!ry6kqxyx4cf*p2ag99z%k0f='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'cuenta.Cuenta'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'cuenta.apps.CuentaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<br>
+<div style="padding-top: 10%; padding-bottom: 10%;">
+<div class="d-flex justify-content-center">
+    <h3 id="form-title">Inicio de sesion</h3>
+</div>
+<div class="d-flex justify-content-center form_container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input type="text" name="email" placeholder="Correo electronico..." class="form-control">
+        </div>
+        <div class="input-group mb-2">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" name="password" placeholder="Contraseña..." class="form-control" >
+        </div>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input class="btn btn-primary" type="submit" value="Iniciar sesion">
+        </div>
+    </form>
+</div>
+    <div class="mt-4">
+    <div class="d-flex justify-content-center links">
+        No tienes cuenta? <a href="{% url 'registrar' %}" class="ml-2">Registrate</a>
+    </div>
+
+</div>
+</div>
+
+{% endblock %}
+
