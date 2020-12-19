@@ -51,6 +51,3 @@ def cerrarSesion(request):
     logout(request)
     return redirect('logearse')
 
-def inicio(request):
-    context = {}
-    return render(request, 'cuenta/inicio.html', context)
