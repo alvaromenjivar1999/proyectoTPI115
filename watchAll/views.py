@@ -15,6 +15,8 @@ class VideoListView(ListView):
     template_name = "cuenta/inicio.html"
 
 '''
+
+
 def agregar_recurso(request):
     if request.user.is_authenticated:
         form = recursoForm()
@@ -22,16 +24,22 @@ def agregar_recurso(request):
         if request.method == 'POST':
             form = recursoForm(request.POST)
             if form.is_valid():
+
+
                 nuevo_Recurso = Video(
                     nombre=form.cleaned_data.get('nombre'),
                     fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
                     categoria=form.cleaned_data.get('categoria'),
                     palabraClave=form.cleaned_data.get('palabraClave'),
-                    recurso=form.cleaned_data.get('recurso'),
                 )
+
                 nuevo_Recurso = form.save(commit=False)
                 nuevo_Recurso.usuario = Cuenta.objects.get(
                     id=request.user.id)
+                recurso = str(form.cleaned_data.get('recurso'))
+                splitRecurso = recurso.split("=")
+                recursoPartida = splitRecurso[1]
+                nuevo_Recurso.recurso = recursoPartida
                 nuevo_Recurso.save()
                 return redirect('inicio')
 
