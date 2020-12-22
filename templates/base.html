@@ -11,6 +11,19 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    .videoThumb h5 {
+        color: red;
+    }
+
+    .videoThumb {
+        margin: 1px 1px 1px 1px;
+        display: block;
+    }
+
+    .videos {
+        display: block;
+    }
+
     .container{
         padding-top: 2%;
     }
@@ -45,11 +58,13 @@
         <a href="#news">Buscar</a>
         <a href="{% url 'registrar' %}">Registrarte</a>
         <a href="{% url 'logearse' %}">Log In</a>
+        <a href="{% url 'agregarRecurso' %}">Agregar video</a>
     </div>
 
     <div id="content">
         {% block content %}{% endblock %}
     </div>
+
     <br>
     <br>
     <div id="footer">

@@ -2,8 +2,20 @@
 {% load static %}
 {% block title %}Registro de usuario{% endblock %}
 {% block content %}
-<div class="container">
-    <h3>Inicio</h3>
+<div class="container videos">
+    <h2>Ultimos videos</h2>
+    {% if videosPublicados %}
+        {% for video in videosPublicados %}
+            <div class="videoThumb">
+                <h5><b>Titulo: {{ video.nombre }}</b></h5>
+                <p>Fecha de publicacion: {{ video.fechaPublicacion }}</p>
+                <p>Compartido por: {{ video.usuario }}</p>
+                <a href="https://www.youtube.com/watch?v={{ video.recurso }}">
+                    <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 <div>
     <a href="{% url 'logout' %}">Cerrar sesion</a>
