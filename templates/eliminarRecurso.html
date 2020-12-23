@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">{% csrf_token %}
+    <h1>Desea eliminar su video?</h1>
+    <button class="btn btn-danger" type="submit">Sí, eliminar</button>
+    <a class="btn btn-default" href="{% url 'dashboard' %}">Cancelar</a>
+</form>
+{% endblock %}
