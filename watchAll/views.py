@@ -2,19 +2,39 @@ from django.shortcuts import get_object_or_404, render, redirect
 from watchAll.models import Video
 from cuenta.models import Cuenta
 from watchAll.forms import recursoForm
-from cuenta.forms import registroUsuario
-from django.views.generic import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 # Create your views here.
 
 
-class videoDelete(DeleteView):
-    model = Video
-    template_name = 'eliminarRecurso.html'
-    success_url = reverse_lazy('logearse')
+class listaVideos(ListView):
+    template_name = 'cuenta/inicio.html'
+    context_object_name = 'videosPublicados'
 
+    def get_queryset(self):
+        return Video.objects.order_by('-fechaPublicacion')[:10]
+
+
+class videosPersonales(ListView):
+    template_name = 'misVideos.html'
+    context_object_name = 'videosPublicados'
+
+    def get_queryset(self):
+        return Video.objects.filter(usuario_id=self.request.user.id).order_by('-fechaPublicacion')[:10]
+
+
+class editarVideo(UpdateView):
+    model = Video
+    form_class = recursoForm
+    template_name = 'agregarRecurso.html'
+    success_url = reverse_lazy('inicio')
+
+class eliminarVideo(DeleteView):
+    model = Video
+    template_name = 'verificacion.html'
+    success_url = reverse_lazy('inicio')
 
 def agregar_recurso(request):
     if request.user.is_authenticated:
@@ -47,21 +67,3 @@ def agregar_recurso(request):
 
     else:
         return redirect('registrar')
-
-
-def inicio(request):
-    if request.user.is_authenticated:
-        videosPublicados = Video.objects.order_by('-fechaPublicacion')[:10]
-        context = {'videosPublicados': videosPublicados}
-        return render(request, 'cuenta/inicio.html', context)
-    else:
-        return redirect('logearse')
-
-
-def videosPersonales(request):
-    if request.user.is_authenticated:
-        videosPublicados = Video.objects.filter(usuario_id=request.user.id).order_by('-fechaPublicacion')[:10]
-        context = {'videosPublicados': videosPublicados}
-        return render(request, 'misVideos.html', context)
-    else:
-        return redirect('logearse')
