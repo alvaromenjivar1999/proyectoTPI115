@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from watchAll.models import Video
 from cuenta.models import Cuenta
 from watchAll.forms import recursoForm
+from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -15,6 +16,25 @@ class listaVideos(ListView):
 
     def get_queryset(self):
         return Video.objects.order_by('-fechaPublicacion')[:10]
+
+def listarVideos(request):
+    if request.user.is_authenticated:
+        busqueda = request.GET.get("buscar")
+        videosPublicados = Video.objects.order_by('-fechaPublicacion')[:10]
+
+        if busqueda:
+            videosPublicados = Video.objects.filter(
+                Q(nombre__icontains=busqueda) |
+
+                Q(categoria__icontains=busqueda)
+            ).distinct()
+
+        context = {'videosPublicados': videosPublicados}
+        return render(request, 'cuenta/inicio.html', context)
+    else:
+        return redirect('logearse')
+
+
 
 
 class videosPersonales(ListView):

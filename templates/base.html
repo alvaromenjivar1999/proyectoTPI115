@@ -55,11 +55,16 @@
 <body>
     <div class="topnav">
         <a href="{% url 'inicio' %}"><img class="img-responsive" width="100px" src="{% static 'logo.png' %}"></a>
-        <a href="#news">Buscar</a>
         <a href="{% url 'registrar' %}">Registrarte</a>
         <a href="{% url 'logearse' %}">Log In</a>
         <a href="{% url 'agregarRecurso' %}">Agregar video</a>
+        <form method="GET">
+            <input class="form-control" type="text" name="buscar" placeholder="Buscar videos" aria-label="Search">
+            <button type="submit">Buscar</button>
+        </form>
+
         <a href="{% url 'misVideos' %}">Mis videos</a>
+
     </div>
 
     <div id="content">
