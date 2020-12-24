@@ -25,7 +25,7 @@ def listarVideos(request):
         if busqueda:
             videosPublicados = Video.objects.filter(
                 Q(nombre__icontains=busqueda) |
-
+                Q(palabraClave__icontains=busqueda) |
                 Q(categoria__icontains=busqueda)
             ).distinct()
 
