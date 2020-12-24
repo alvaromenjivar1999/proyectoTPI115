@@ -12,18 +12,21 @@ from django.views import generic
 
 
 def registrar(request):
-    form = registroUsuario()
+    if not request.user.is_authenticated:
+        form = registroUsuario()
 
-    if request.method == 'POST':
-        form = registroUsuario(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request)
-            return redirect('logearse')
+        if request.method == 'POST':
+            form = registroUsuario(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request)
+                return redirect('logearse')
 
 
-    context = {'form': form}
-    return render(request, 'cuenta/registro.html', context)
+        context = {'form': form}
+        return render(request, 'cuenta/registro.html', context)
+    else:
+        return redirect('inicio')
 
 
 def logearse(request):
@@ -51,6 +54,3 @@ def cerrarSesion(request):
     logout(request)
     return redirect('logearse')
 
-def inicio(request):
-    context = {}
-    return render(request, 'cuenta/inicio.html', context)
