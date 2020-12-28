@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from watchAll.models import Video
+from watchAll.models import Video, Favoritos, VerMasTarde
 from cuenta.models import Cuenta
 from watchAll.forms import recursoForm
 from django.db.models import Q
@@ -9,13 +9,33 @@ from django.http import JsonResponse
 
 # Create your views here.
 
+def verVideo(request, video_id):
+    if request.user.is_authenticated:
+        video = Video.objects.filter(id=video_id).get
+        context = {'id': video_id, 'video': video}
+        return render(request, 'ver.html', context)
+    else:
+        return redirect('loguearse')
 
-class listaVideos(ListView):
-    template_name = 'cuenta/inicio.html'
-    context_object_name = 'videosPublicados'
+def favoritos(request):
+    if request.user.is_authenticated:
+        videosPublicados = Favoritos.objects.filter(usuario=request.user).get
+        tipoLista = "Favoritos"
 
-    def get_queryset(self):
-        return Video.objects.order_by('-fechaPublicacion')[:10]
+        context = {'titulo': tipoLista, 'videosPublicados': videosPublicados}
+        return render(request, 'lista.html', context)
+    else:
+        return redirect('loguearse')
+
+def verMasTarde(request):
+    if request.user.is_authenticated:
+        videosPublicados = VerMasTarde.objects.filter(usuario=request.user).get
+        tipoLista = "Ver mas tarde"
+
+        context = {'titulo': tipoLista, 'videosPublicados': videosPublicados}
+        return render(request, 'lista.html', context)
+    else:
+        return redirect('loguearse')
 
 def listarVideos(request):
     if request.user.is_authenticated:
@@ -32,7 +52,7 @@ def listarVideos(request):
         context = {'videosPublicados': videosPublicados}
         return render(request, 'cuenta/inicio.html', context)
     else:
-        return redirect('logearse')
+        return redirect('loguearse')
 
 
 
@@ -86,4 +106,4 @@ def agregar_recurso(request):
         return render(request, 'agregarRecurso.html', context)
 
     else:
-        return redirect('registrar')
+        return redirect('loguearse')

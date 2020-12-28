@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<div class="container videos">
+    <h2>{{ video.nombre }}</h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.recurso }}?rel=0&autoplay=1" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+    <p>Video agregado por: {{ video.usuario }}</p>
+    <p>Fecha: {{ video.fechaPublicacion }}</p>
+</div>
+
+{% endblock %}

@@ -20,7 +20,7 @@ def registrar(request):
             if form.is_valid():
                 form.save()
                 messages.success(request)
-                return redirect('logearse')
+                return redirect('loguearse')
 
 
         context = {'form': form}
@@ -29,7 +29,7 @@ def registrar(request):
         return redirect('inicio')
 
 
-def logearse(request):
+def loguearse(request):
     if not request.user.is_authenticated:
 
         if request.method == 'POST':
@@ -52,5 +52,5 @@ def logearse(request):
 
 def cerrarSesion(request):
     logout(request)
-    return redirect('logearse')
+    return redirect('loguearse')
 
