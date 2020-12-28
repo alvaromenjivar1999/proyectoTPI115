@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<div class="container videos">
+    <h2>Videos agregados</h2>
+    {% if videosPublicados %}
+        {% for video in videosPublicados %}
+            <table>
+                <tr>
+                    <td>
+                        <div class="videoThumb">
+                            <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
+                            <h5><b>Titulo: {{ video.nombre }}</b></h5>
+                                <p>Fecha de publicacion: {{ video.fechaPublicacion }}</p>
+                                <p>Compartido por: {{ video.usuario }}</p>
+                                <p>Categoria: {{ video.categoria }}</p>
+                                <a href="https://www.youtube.com/watch?v={{ video.recurso }}">
+
+                                </a>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{% url 'editarRecurso' video.id %}">Editar</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{% url 'eliminarRecurso' video.id %}">Eliminar</a>
+                    </td>
+                </tr>
+            </table>
+
+        {% endfor %}
+    {% endif %}
+</div>
+<div>
+    <a href="{% url 'logout' %}">Cerrar sesion</a>
+</div>
+{% endblock %}

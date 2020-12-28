@@ -1,0 +1,6 @@
+<form method="POST">
+    {% csrf_token %}
+    <h1>Desea eliminar el video {{ object }}?</h1>
+    <button type="submit" name="button">Confirmar</button>
+    <a href="{% url 'misVideos' %}">Cancelar</a>
+</form>

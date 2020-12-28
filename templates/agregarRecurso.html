@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Agregar recurso{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>Agregar recurso</h3>
+<form method="POST" id = "recurso_form" action="">
+    {% csrf_token %}
+    {{ form.nombre.label }}
+    {{ form.nombre }}
+    {{ form.fechaPublicacion.label }}
+    {{ form.fechaPublicacion }}
+    {{ form.categoria.label }}
+    {{ form.categoria }}
+    {{ form.palabraClave.label }}
+    {{ form.palabraClave }}
+    {{ form.recurso.label }}
+    {{ form.recurso }}
+    <br>
+    <input class="btn btn-primary" type="submit" name="Agregar recurso">
+</form>
+    {{ form.erros }}
+</div>
+{% endblock %}
