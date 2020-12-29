@@ -8,6 +8,11 @@
     </div>
 <div class="d-flex justify-content-center">
 <div class="col-5">
+    {% if form.errors %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" >
+    {{ form.errors }}  
+    </div>
+{% endif %}
 <form method="POST" id = "registro_form" action="">
     {% csrf_token %}
     {{ form.email.label }}
@@ -20,15 +25,14 @@
     {{ form.fechaNacimiento }}
     {{ form.sexo.label }}
     {{ form.sexo }}
-    {{ form.password.label }}
-    {{ form.password }}
-    {{ form.password2.label }}
+    Contraseña
+    {{ form.password1 }}
+    Cinfirmar Contraseña
     {{ form.password2 }}
 <div class="d-flex justify-content-center mt-3 login_container">
     <input class="btn btn-primary col-6 " type="submit" name="Crear cuenta">
 </div>
 </form>
-    {{ form.erros }}
     <div class="d-flex justify-content-center links">
     <a href="{% url 'loguearse' %}">Ya tienes cuenta?</a></div>
 </div>

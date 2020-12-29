@@ -19,7 +19,6 @@ def registrar(request):
             messages.warning(request,'hasta a qui')
             if form.is_valid():
                 form.save()
-                messages.success(request)
                 return redirect('loguearse')
 
 

@@ -5,7 +5,7 @@ from django.forms import CharField, Form
 
 
 class registroUsuario(UserCreationForm):
-    password = forms.CharField(label = 'Contraseña', widget = forms.PasswordInput(
+    password1 = forms.CharField(label = 'Contraseña', widget = forms.PasswordInput(
         attrs = {
             'class' : 'form-control',
             'placeholder' : 'Ingrese su contraseña',
@@ -13,7 +13,7 @@ class registroUsuario(UserCreationForm):
             'required' : 'required',
         }
     ))
-    password2 = forms.CharField(label = 'Contraseña de confirmación', widget = forms.PasswordInput(
+    password2 = forms.CharField(label = 'Confirmar contraseña', widget = forms.PasswordInput(
         attrs = {
             'class' : 'form-control',
             'placeholder' : 'Ingrese nuevamente su contraseña',
