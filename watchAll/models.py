@@ -13,3 +13,19 @@ class Video(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+
+class Favoritos(models.Model):
+    usuario = models.ForeignKey("cuenta.Cuenta", on_delete=models.SET_NULL, null=True)
+    videos = models.ManyToManyField(Video)
+
+    def __str__(self):
+        return str(self.usuario)
+
+
+class VerMasTarde(models.Model):
+    usuario = models.ForeignKey("cuenta.Cuenta", on_delete=models.SET_NULL, null=True)
+    videos = models.ManyToManyField(Video)
+
+    def __str__(self):
+        return str(self.usuario)

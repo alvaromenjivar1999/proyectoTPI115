@@ -5,67 +5,108 @@
     <title>{% block title %}My amazing site{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <style>
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .videoThumb h5 {
-        color: red;
+      font-family: 'Nanum Gothic', sans-serif;
     }
 
     .videoThumb {
         margin: 1px 1px 1px 1px;
-        display: block;
     }
 
-    .videos {
-        display: block;
+    .videos { padding-left: 1%; }
+
+    .divVideo {
+        display: inline-block;
+	    flex-wrap: wrap;
+	    padding: 0.3%;
+    }
+
+    .tituloVideo {
+        padding-top: 0.5%;
+        padding-bottom: 0.5%;
+        text-align: center;
     }
 
     .container{
         padding-top: 2%;
     }
-    h3 {
-        text-align: center;
-    }
 
     .topnav {
       overflow: hidden;
-      background-color: #444;
+      background-color: #000;
     }
 
-    .topnav a {
-      float: left;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 17px;
+    .izquierda {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .derecha {
+        float: right;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
     }
 
     .topnav a:hover {
       background-color: #ddd;
       color: black;
     }
+
+
     </style>
 </head>
 
 <body>
+    {% if not request.user.is_authenticated %}
     <div class="topnav">
-        <a href="{% url 'inicio' %}"><img class="img-responsive" width="100px" src="{% static 'logo.png' %}"></a>
-        <a href="{% url 'registrar' %}">Registrarte</a>
-        <a href="{% url 'logearse' %}">Log In</a>
-        <a href="{% url 'agregarRecurso' %}">Agregar video</a>
-        <form method="GET">
-            <input class="form-control" type="text" name="buscar" placeholder="Escribe titulo, categoria o palabra clave" aria-label="Search">
-            <button type="submit">Buscar</button>
-        </form>
-
-        <a href="{% url 'misVideos' %}">Mis videos</a>
-
+        <a  class="izquierda"
+ href="{% url 'inicio' %}"><img class="img-responsive" width="100px" src="{% static 'logo.png' %}"></a>
+        <a class="derecha"href="{% url 'registrar' %}">Registrarte</a>
+        <a class="derecha" href="{% url 'loguearse' %}">Log In</a>
     </div>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <div class="topnav">
+        <a class="izquierda"    data-aos="fade"
+ href="{% url 'inicio' %}"><img class="img-responsive" width="100px" src="{% static 'logo.png' %}"></a>
+
+
+        <a class="izquierda" href="{% url 'agregarRecurso' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+</svg> Agregar video</a>
+        <a class="izquierda" href="{% url 'misVideos' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+</svg> Mis videos</a>
+        <a class="izquierda" href="{% url 'favoritos' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+  <path d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+</svg> Favoritos</a>
+        <a class="izquierda" href="{% url 'masTarde' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-watch" viewBox="0 0 16 16">
+  <path d="M8.5 5a.5.5 0 0 0-1 0v2.5H6a.5.5 0 0 0 0 1h2a.5.5 0 0 0 .5-.5V5z"/>
+  <path d="M5.667 16C4.747 16 4 15.254 4 14.333v-1.86A5.985 5.985 0 0 1 2 8c0-1.777.772-3.374 2-4.472V1.667C4 .747 4.746 0 5.667 0h4.666C11.253 0 12 .746 12 1.667v1.86a5.99 5.99 0 0 1 1.918 3.48.502.502 0 0 1 .582.493v1a.5.5 0 0 1-.582.493A5.99 5.99 0 0 1 12 12.473v1.86c0 .92-.746 1.667-1.667 1.667H5.667zM13 8A5 5 0 1 0 3 8a5 5 0 0 0 10 0z"/>
+</svg> Ver mas tarde</a>
+
+        <a class="derecha" href="{% url 'logout' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+</svg> Cerrar sesion</a>
+        <a class="derecha" style="color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+</svg> {{ request.user }}</a>
+    </div>
+    {% endif %}
 
     <div id="content">
         {% block content %}{% endblock %}
@@ -74,9 +115,14 @@
     <br>
     <br>
     <div id="footer">
-        <div class="text-center p-3" style="background-color: #444; color: white;">
+        <div class="text-center p-3" style="background-color: #000; color: white;">
             © 2020 Copyright: WatchAll
         </div>
     </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>

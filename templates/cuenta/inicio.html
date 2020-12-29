@@ -2,24 +2,38 @@
 {% load static %}
 {% block title %}Registro de usuario{% endblock %}
 {% block content %}
-<div class="container videos">
-    <h2>Ultimos videos</h2>
+
+<nav class="navbar navbar-light bg-light">
+    <p style="text-align: center;">
+    <form class="form-inline" method="GET">
+            <input class="form-control mr-sm-2" size="50" type="search" name="buscar" placeholder="Escribe titulo, categoria o palabra clave" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+    </p>
+</nav>
+
+<div class="videos">
+    <h2 class="tituloVideo">Ultimos videos</h2>
     {% if videosPublicados %}
-        {% for video in videosPublicados %}
+
+
+            {% for video in videosPublicados %}
+            <div data-aos="zoom-in" class="divVideo">
+            <a style="text-decoration: none; color: green;" href="{% url 'verVideo' video.id %}">
             <div class="videoThumb">
-                <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
-                <h5><b>Titulo: {{ video.nombre }}</b></h5>
+                <img class="img-responsive" width="300px" src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
+                <br>
+                <p style="display: inline;"><b>{{ video.nombre }}</b></p>
                 <p>Fecha de publicacion: {{ video.fechaPublicacion }}</p>
                 <p>Compartido por: {{ video.usuario }}</p>
                 <p>Categoria: {{ video.categoria }}</p>
-                <a href="https://www.youtube.com/watch?v={{ video.recurso }}">
-
-                </a>
+            </div>
+            </a>
             </div>
         {% endfor %}
+
+
     {% endif %}
 </div>
-<div>
-    <a href="{% url 'logout' %}">Cerrar sesion</a>
-</div>
+
 {% endblock %}
