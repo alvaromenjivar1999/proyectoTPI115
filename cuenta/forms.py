@@ -22,11 +22,11 @@ class registroUsuario(UserCreationForm):
             "sexo": 'Sexo',
         }
         widgets = {
-            "email": forms.EmailInput(attrs={'class': 'form-control'}),
-            "nombre": forms.TextInput(attrs={'class': 'form-control'}),
-            "apellido": forms.TextInput(attrs={'class': 'form-control'}),
-            "fechaNacimiento": forms.DateInput(attrs={'class': 'form-control'}),
-            "sexo": forms.TextInput(attrs={'class': 'form-control'}),
+            "email": forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Escribe tu correo electronico'}),
+            "nombre": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe tu primer nombre'}),
+            "apellido": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe tu primer apellido'}),
+            "fechaNacimiento": forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Escribe tu fecha de nacimiento'}),
+            "sexo": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe tu sexo'}),
         }
 
     def __init__(self, *args, **kwargs):

@@ -16,14 +16,21 @@
     {{ form.fechaNacimiento }}
     {{ form.sexo.label }}
     {{ form.sexo }}
-    {{ form.password1.label }}
+    Contraseña
     {{ form.password1 }}
-    {{ form.password2.label }}
+    <br>
+    Confirmar contraseña
     {{ form.password2 }}
-
-    <input type="submit" name="Crear cuenta">
+    <br>
+    <input class="btn btn-primary" type="submit" value="Crear cuenta" name="Crear cuenta">
 </form>
-    {{ form.erros }}
+    <br>
+    <br>
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors }}
+        </div>
+    {% endif %}
     <a href="{% url 'loguearse' %}">Ya tienes cuenta?</a>
 </div>
 {% endblock %}
