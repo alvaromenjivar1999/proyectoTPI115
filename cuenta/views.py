@@ -14,9 +14,9 @@ from django.views import generic
 def registrar(request):
     if not request.user.is_authenticated:
         form = registroUsuario()
-
         if request.method == 'POST':
             form = registroUsuario(request.POST)
+            messages.warning(request,'hasta a qui')
             if form.is_valid():
                 form.save()
                 messages.success(request)
