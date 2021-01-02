@@ -1,9 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
 from watchAll.models import Video
 from django import forms
 from django.forms import ModelForm
 
-class recursoForm(ModelForm):
+
+class RecursoForm(ModelForm):
     class Meta:
         model = Video
         fields = [

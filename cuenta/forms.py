@@ -1,10 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from cuenta.models import Cuenta
 from django import forms
-from django.forms import CharField, Form, PasswordInput
 
 
-class registroUsuario(UserCreationForm):
+class RegistroUsuario(UserCreationForm):
     class Meta:
         model = Cuenta
         fields = [

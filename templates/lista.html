@@ -7,7 +7,7 @@
 
         {% for video in videosPublicados.videos.all %}
             <div data-aos="zoom-in" class="divVideo">
-            <a style="text-decoration: none;" href="{% url 'verVideo' video.id %}">
+            <a style="text-decoration: none;" href="{% url 'ver_video' video.id %}">
             <div data-aos="zoom-in" class="videoThumb">
                 <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
                 <h5><b>Titulo: {{ video.nombre }}</b></h5>

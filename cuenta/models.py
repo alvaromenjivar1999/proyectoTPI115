@@ -3,8 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 
 
-
-class gestionarCuenta(BaseUserManager):
+class GestionarCuenta(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
             raise ValueError("Un usuario debe tener email en nuestra plataforma")
@@ -44,7 +43,7 @@ class Cuenta(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
-    objects = gestionarCuenta()
+    objects = GestionarCuenta()
 
     def __str__(self):
         return self.nombre + ' ' + self.apellido

@@ -1,15 +1,13 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from watchAll.models import Video, Favoritos, VerMasTarde
 from cuenta.models import Cuenta
-from watchAll.forms import recursoForm
+from watchAll.forms import RecursoForm
 from django.db.models import Q
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
-from django.http import JsonResponse
 
-# Create your views here.
 
-def verVideo(request, video_id):
+def ver_video(request, video_id):
     if request.user.is_authenticated:
         video = Video.objects.filter(id=video_id).get
         context = {'id': video_id, 'video': video}
@@ -17,17 +15,19 @@ def verVideo(request, video_id):
     else:
         return redirect('loguearse')
 
+
 def favoritos(request):
     if request.user.is_authenticated:
-        videosPublicados = Favoritos.objects.filter(usuario=request.user).get
+        videos_publicados = Favoritos.objects.filter(usuario=request.user).get
         tipoLista = "Favoritos"
 
-        context = {'titulo': tipoLista, 'videosPublicados': videosPublicados}
+        context = {'titulo': tipoLista, 'videosPublicados': videos_publicados}
         return render(request, 'lista.html', context)
     else:
         return redirect('loguearse')
 
-def verMasTarde(request):
+
+def ver_mas_tarde(request):
     if request.user.is_authenticated:
         videosPublicados = VerMasTarde.objects.filter(usuario=request.user).get
         tipoLista = "Ver mas tarde"
@@ -37,7 +37,8 @@ def verMasTarde(request):
     else:
         return redirect('loguearse')
 
-def listarVideos(request):
+
+def listar_videos(request):
     if request.user.is_authenticated:
         busqueda = request.GET.get("buscar")
         videosPublicados = Video.objects.order_by('-fechaPublicacion')[:10]
@@ -55,9 +56,32 @@ def listarVideos(request):
         return redirect('loguearse')
 
 
+def agregar_recurso(request):
+    if request.user.is_authenticated:
+        form = RecursoForm()
+        if request.method == 'POST':
+            form = RecursoForm(request.POST)
+            if form.is_valid():
+                nuevo_Recurso = Video(
+                    nombre=form.cleaned_data.get('nombre'),
+                    fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
+                    categoria=form.cleaned_data.get('categoria'),
+                    palabraClave=form.cleaned_data.get('palabraClave'),
+                )
+                nuevo_Recurso = form.save(commit=False)
+                nuevo_Recurso.usuario = Cuenta.objects.get(
+                    id=request.user.id)
+                nuevo_Recurso.recurso = str(form.cleaned_data.get('recurso')).split("=")[1]
+                nuevo_Recurso.save()
+                return redirect('inicio')
+        context = {'form': form}
+        return render(request, 'agregarRecurso.html', context)
+
+    else:
+        return redirect('loguearse')
 
 
-class videosPersonales(ListView):
+class VideosPersonales(ListView):
     template_name = 'misVideos.html'
     context_object_name = 'videosPublicados'
 
@@ -65,45 +89,15 @@ class videosPersonales(ListView):
         return Video.objects.filter(usuario_id=self.request.user.id).order_by('-fechaPublicacion')[:10]
 
 
-class editarVideo(UpdateView):
+class EditarVideo(UpdateView):
     model = Video
-    form_class = recursoForm
+    form_class = RecursoForm
     template_name = 'agregarRecurso.html'
     success_url = reverse_lazy('inicio')
 
-class eliminarVideo(DeleteView):
+
+class EliminarVideo(DeleteView):
     model = Video
     template_name = 'verificacion.html'
     success_url = reverse_lazy('inicio')
 
-def agregar_recurso(request):
-    if request.user.is_authenticated:
-        form = recursoForm()
-
-        if request.method == 'POST':
-            form = recursoForm(request.POST)
-            if form.is_valid():
-
-
-                nuevo_Recurso = Video(
-                    nombre=form.cleaned_data.get('nombre'),
-                    fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
-                    categoria=form.cleaned_data.get('categoria'),
-                    palabraClave=form.cleaned_data.get('palabraClave'),
-                )
-
-                nuevo_Recurso = form.save(commit=False)
-                nuevo_Recurso.usuario = Cuenta.objects.get(
-                    id=request.user.id)
-                recurso = str(form.cleaned_data.get('recurso'))
-                splitRecurso = recurso.split("=")
-                recursoPartida = splitRecurso[1]
-                nuevo_Recurso.recurso = recursoPartida
-                nuevo_Recurso.save()
-                return redirect('inicio')
-
-        context = {'form': form}
-        return render(request, 'agregarRecurso.html', context)
-
-    else:
-        return redirect('loguearse')

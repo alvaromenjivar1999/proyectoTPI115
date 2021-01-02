@@ -7,30 +7,29 @@
     {% if videosPublicados %}
         {% for video in videosPublicados %}
             <div data-aos="zoom-in" class="divVideo">
-            <table>
-                <tr>
-                    <td>
-                        <a style="text-decoration: none;" href="{% url 'verVideo' video.id %}">
-                        <div class="videoThumb" >
-                            <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
-                            <h5><b>Titulo: {{ video.nombre }}</b></h5>
+                <table>
+                    <tr>
+                        <td>
+                            <a style="text-decoration: none;" href="{% url 'ver_video' video.id %}">
+                            <div class="videoThumb" >
+                                <img src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
+                                <h5><b>Titulo: {{ video.nombre }}</b></h5>
                                 <p>Fecha de publicacion: {{ video.fechaPublicacion }}</p>
                                 <p>Compartido por: {{ video.usuario }}</p>
                                 <p>Categoria: {{ video.categoria }}</p>
-                                <a href="https://www.youtube.com/watch?v={{ video.recurso }}">
-                                </a>
-                        </div></a>
-                    </td>
-                    <td>
-                        <a class="btn btn-info" href="{% url 'editarRecurso' video.id %}">Editar</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" href="{% url 'eliminarRecurso' video.id %}">Eliminar</a>
-                    </td>
+                                <a href="https://www.youtube.com/watch?v={{ video.recurso }}"></a>
+                            </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'editarRecurso' video.id %}">Editar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'eliminarRecurso' video.id %}">Eliminar</a>
+                        </td>
                 </tr>
             </table>
             </div>
-
         {% endfor %}
     {% endif %}
 </div>

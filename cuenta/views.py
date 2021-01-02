@@ -1,27 +1,19 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from cuenta.forms import registroUsuario
+from django.shortcuts import render, redirect
+from cuenta.forms import RegistroUsuario
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-
-from cuenta.models import Cuenta
-from django.views import generic
-
-
-# Create your views here.
 
 
 def registrar(request):
     if not request.user.is_authenticated:
-        form = registroUsuario()
+        form = RegistroUsuario()
 
         if request.method == 'POST':
-            form = registroUsuario(request.POST)
+            form = RegistroUsuario(request.POST)
             if form.is_valid():
                 form.save()
                 messages.success(request)
                 return redirect('loguearse')
-
 
         context = {'form': form}
         return render(request, 'cuenta/registro.html', context)
@@ -50,7 +42,8 @@ def loguearse(request):
     else:
         return redirect('inicio')
 
-def cerrarSesion(request):
+
+def cerrar_sesion(request):
     logout(request)
     return redirect('loguearse')
 
