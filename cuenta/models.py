@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
+import uuid
 
 
 
@@ -30,18 +31,20 @@ class gestionarCuenta(BaseUserManager):
 
 
 class Cuenta(AbstractBaseUser):
+    sexo=(('Femenino','Femenimo'),
+         ('Masculino','Masculino'))
     nombre = models.CharField(verbose_name="nombre", max_length=30)
     apellido = models.CharField(verbose_name="apellido", max_length=30)
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     fechaNacimiento = models.DateTimeField(verbose_name='fecha nacimiento', default=timezone.now)
-    sexo = models.CharField(max_length=10, default='Femenino')
+    sexo = models.CharField(max_length=10, default='Femenino',choices=sexo,)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-
+    token = models.UUIDField(primary_key=False, editable=False,default=uuid.uuid4)
     USERNAME_FIELD = 'email'
 
     objects = gestionarCuenta()
