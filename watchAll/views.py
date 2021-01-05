@@ -111,7 +111,8 @@ def agregar_recurso(request):
                     nuevo_Recurso.save()
                     return redirect('inicio')
                 else:
-                    return redirect('favoritos')
+                    context = {'form': form, 'error': 'No ingresaste correctamente el enlace de youtube'}
+                    return render(request, 'agregarRecurso.html', context)
         context = {'form': form}
         return render(request, 'agregarRecurso.html', context)
 

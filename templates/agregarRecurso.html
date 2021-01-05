@@ -4,6 +4,11 @@
 {% block content %}
 <div class="container">
     <h3>Agregar recurso</h3>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
 <form method="POST" id = "recurso_form" action="">
     {% csrf_token %}
     {{ form.nombre.label }}
