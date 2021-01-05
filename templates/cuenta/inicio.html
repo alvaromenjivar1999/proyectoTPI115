@@ -11,13 +11,14 @@
     </p>
 </nav>
 
-<div class="videos">
+<div style="text-align:center">
+    <div class="videos">
     <h2 class="tituloVideo">Ultimos videos</h2>
     {% if videosPublicados %}
             {% for video in videosPublicados %}
             <div data-aos="zoom-in" class="divVideo">
             <a style="text-decoration: none; color: green;" href="{% url 'ver_video' video.id %}">
-            <div class="videoThumb">
+            <div style="text-align:left" class="videoThumb">
                 <img class="img-responsive" width="300px" src="http://i3.ytimg.com/vi/{{ video.recurso }}/mqdefault.jpg" alt="">
                 <br>
                 <p style="display: inline;"><b>{{ video.nombre }}</b></p>
@@ -29,5 +30,7 @@
             </div>
         {% endfor %}
     {% endif %}
-</div>
+    </div>
+</div>>
+
 {% endblock %}
