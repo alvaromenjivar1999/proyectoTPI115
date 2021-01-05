@@ -9,12 +9,29 @@ from django.urls import reverse_lazy
 
 def ver_video(request, video_id):
     if request.user.is_authenticated:
-        video = Video.objects.filter(id=video_id).get
+        video = Video.objects.get(id=video_id)
         context = {'id': video_id, 'video': video}
         return render(request, 'ver.html', context)
     else:
         return redirect('loguearse')
 
+
+def agregrar_video_lista(request, video_id, tipo):
+    if request.user.is_authenticated:
+        if tipo == 1:
+            video = Video.objects.get(id=video_id)
+            favoritos = Favoritos.objects.get(usuario=request.user)
+            favoritos.videos.add(video)
+            return redirect('favoritos')
+        elif tipo == 2:
+            video = Video.objects.get(id=video_id)
+            ver_mas_tarde = VerMasTarde.objects.get(usuario=request.user)
+            ver_mas_tarde.videos.add(video)
+            return redirect('masTarde')
+        else:
+            return redirect('inicio')
+    else:
+        return redirect('loguearse')
 
 def favoritos(request):
     if request.user.is_authenticated:

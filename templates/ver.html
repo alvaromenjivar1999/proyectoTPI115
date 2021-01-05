@@ -17,8 +17,8 @@
     <p>Video agregado por: {{ video.usuario }}</p>
     <p>Fecha: {{ video.fechaPublicacion }}</p>
     <table>
-        <td><button class="btn btn-dark">+ Favorito</button></td>
-        <td><button class="btn btn-dark">+ Ver mas tarde</button></td>
+        <td><a href="{% url 'agregarALista' video.id 1 %}" class="btn btn-dark">+ Favorito</a></td>
+        <td><a href="{% url 'agregarALista' video.id 2 %}" class="btn btn-dark">+ Ver mas tarde</a></td>
         <td><button class="btn btn-success">Descargar video</button></td>
     </table>
 </div>
