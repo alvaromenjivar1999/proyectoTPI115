@@ -15,7 +15,7 @@ from proyectoTPI115  import settings
 
 
 #funcion para enviar correo 
-def send_email(request,correo):
+def send_email(request,correo,usuario):
     try:
         URL = settings.DOMINIO if not settings.DEBUG else request.META['HTTP_HOST']
         # Establecemos conexion con el servidor smtp de gmail
@@ -31,9 +31,9 @@ def send_email(request,correo):
         mensaje['From'] = "pruebatpi5@gmail.com"
         mensaje['To'] = correo
         mensaje['Subject'] = "Tienes un correo"
-       
         content = render_to_string('cuenta/correo.html' ,{
-            'user':Cuenta,'link':'http://{}/firstlogin'.format(URL),
+            'usuario':usuario,
+            'link':'http://{}/firstlogin'.format(URL),
             })
         # Adjuntamos el texto
         mensaje.attach(MIMEText(content, 'html'))
@@ -57,11 +57,11 @@ def registrar(request):
         if request.method == 'POST':
             form = registroUsuario(request.POST)
             if form.is_valid():
-                #form.save()
-                #correo = form.data.get('email')
+                form.save()
                 correo = request.POST.get('email')
-                send_email(request,correo)
-                return redirect('loguearse')
+                usuario = request.POST.get('nombre')
+                send_email(request,correo,usuario)
+                return render(request,'cuenta/envio_correo.html')
 
         context = {'form': form}
         return render(request, 'cuenta/registro.html', context)
@@ -75,9 +75,8 @@ def loguearse(request):
         if request.method == 'POST':
             email = request.POST.get('email')
             password = request.POST.get('password')
-
             usuario = authenticate(request, email=email, password=password)
-
+            
             if usuario is not None:
                 login(request, usuario)
                 return redirect('inicio')
@@ -101,9 +100,10 @@ def first_loguearse(request):
         if request.method == 'POST':
             email = request.POST.get('email')
             password = request.POST.get('password')
-
+            pase = Cuenta.objects.get( email = email) 
+            pase.is_active = True
+            pase.save()
             usuario = authenticate(request, email=email, password=password)
-
             if usuario is not None:
                 login(request, usuario)
                 return redirect('inicio')
@@ -111,7 +111,7 @@ def first_loguearse(request):
                 messages.error(request, 'Usuario o contraseña incorrecta')
 
         context = {}
-        return render(request, 'cuenta/login.html', context)
+        return render(request, 'cuenta/firts_login.html', context)
 
     else:
         return redirect('inicio')
