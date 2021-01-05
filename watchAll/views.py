@@ -97,18 +97,21 @@ def agregar_recurso(request):
         if request.method == 'POST':
             form = RecursoForm(request.POST)
             if form.is_valid():
-                nuevo_Recurso = Video(
-                    nombre=form.cleaned_data.get('nombre'),
-                    fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
-                    categoria=form.cleaned_data.get('categoria'),
-                    palabraClave=form.cleaned_data.get('palabraClave'),
-                )
-                nuevo_Recurso = form.save(commit=False)
-                nuevo_Recurso.usuario = Cuenta.objects.get(
-                    id=request.user.id)
-                nuevo_Recurso.recurso = str(form.cleaned_data.get('recurso')).split("=")[1]
-                nuevo_Recurso.save()
-                return redirect('inicio')
+                if "www.youtube.com/watch?v" in form.cleaned_data.get('recurso'):
+                    nuevo_Recurso = Video(
+                        nombre=form.cleaned_data.get('nombre'),
+                        fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
+                        categoria=form.cleaned_data.get('categoria'),
+                        palabraClave=form.cleaned_data.get('palabraClave'),
+                    )
+                    nuevo_Recurso = form.save(commit=False)
+                    nuevo_Recurso.usuario = Cuenta.objects.get(
+                        id=request.user.id)
+                    nuevo_Recurso.recurso = str(form.cleaned_data.get('recurso')).split("=")[1]
+                    nuevo_Recurso.save()
+                    return redirect('inicio')
+                else:
+                    return redirect('favoritos')
         context = {'form': form}
         return render(request, 'agregarRecurso.html', context)
 
