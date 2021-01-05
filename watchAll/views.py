@@ -33,12 +33,30 @@ def agregrar_video_lista(request, video_id, tipo):
     else:
         return redirect('loguearse')
 
+
+def eliminar_video_lista(request, video_id, tipo):
+    if request.user.is_authenticated:
+        if tipo == 1:
+            video = Video.objects.get(id=video_id)
+            favoritos = Favoritos.objects.get(usuario=request.user)
+            favoritos.videos.remove(video)
+            return redirect('favoritos')
+        elif tipo == 2:
+            video = Video.objects.get(id=video_id)
+            ver_mas_tarde = VerMasTarde.objects.get(usuario=request.user)
+            ver_mas_tarde.videos.remove(video)
+            return redirect('masTarde')
+        else:
+            return redirect('inicio')
+    else:
+        return redirect('loguearse')
+
 def favoritos(request):
     if request.user.is_authenticated:
         videos_publicados = Favoritos.objects.filter(usuario=request.user).get
         tipoLista = "Favoritos"
 
-        context = {'titulo': tipoLista, 'videosPublicados': videos_publicados}
+        context = {'tipo': 1, 'titulo': tipoLista, 'videosPublicados': videos_publicados}
         return render(request, 'lista.html', context)
     else:
         return redirect('loguearse')
@@ -49,7 +67,7 @@ def ver_mas_tarde(request):
         videosPublicados = VerMasTarde.objects.filter(usuario=request.user).get
         tipoLista = "Ver mas tarde"
 
-        context = {'titulo': tipoLista, 'videosPublicados': videosPublicados}
+        context = {'tipo': 2, 'titulo': tipoLista, 'videosPublicados': videosPublicados}
         return render(request, 'lista.html', context)
     else:
         return redirect('loguearse')

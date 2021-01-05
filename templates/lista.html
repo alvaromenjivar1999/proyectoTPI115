@@ -18,6 +18,16 @@
                 </a>
             </div>
             </a>
+                {% if tipo == 1%}
+                 <td>
+                            <a class="btn btn-danger" href="{% url 'removerALista' video.id 1 %}">Eliminar</a>
+                        </td>
+                {% endif %}
+                {% if tipo == 2%}
+                 <td>
+                            <a class="btn btn-danger" href="{% url 'removerALista' video.id 2 %}">Eliminar</a>
+                        </td>
+                {% endif %}
             </div>
         {% endfor %}
 </div>
