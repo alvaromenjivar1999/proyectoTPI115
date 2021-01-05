@@ -21,11 +21,11 @@ class RecursoForm(ModelForm):
             "recurso": 'Recurso',
         }
         widgets = {
-            "nombre": forms.TextInput(attrs={'class': 'form-control'}),
+            "nombre": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe el titutlo del video que publicaras'}),
             "fechaPublicacion": forms.DateInput(attrs={'class': 'form-control'}),
-            "categoria": forms.TextInput(attrs={'class': 'form-control'}),
-            "palabraClave": forms.TextInput(attrs={'class': 'form-control'}),
-            "recurso": forms.TextInput(attrs={'class': 'form-control'}),
+            "categoria": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe la categoria del video, ej: Musica'}),
+            "palabraClave": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escribe una palabra clave para el video, ej: robotica'}),
+            "recurso": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Pega el enlace de youtube del video que agregaras, ej: www.youtube.com/watch?v=vAqvbLs77xE'}),
         }
 
     def __init__(self, *args, **kwargs):
