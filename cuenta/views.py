@@ -30,7 +30,7 @@ def send_email(request,correo,usuario):
         mensaje = MIMEMultipart()
         mensaje['From'] = "pruebatpi5@gmail.com"
         mensaje['To'] = correo
-        mensaje['Subject'] = "Tienes un correo"
+        mensaje['Subject'] = "Activacion de cuenta"
         content = render_to_string('cuenta/correo.html' ,{
             'usuario':usuario,
             'link':'http://{}/firstlogin'.format(URL),
@@ -47,7 +47,37 @@ def send_email(request,correo,usuario):
     except Exception as e:
         print(e)
 
+def send_email_reset(request,correo,usuario):
+    try:
+        URL = settings.DOMINIO if not settings.DEBUG else request.META['HTTP_HOST']
+        # Establecemos conexion con el servidor smtp de gmail
+        mailServer = smtplib.SMTP('smtp.gmail.com', 587)
+        print(mailServer.ehlo())
+        mailServer.starttls()
+        print(mailServer.ehlo())
+        mailServer.login("pruebatpi5@gmail.com", "tpiues115")
+        print('conectado..')
 
+        # Construimos el mensaje simple
+        mensaje = MIMEMultipart()
+        mensaje['From'] = "pruebatpi5@gmail.com"
+        mensaje['To'] = correo
+        mensaje['Subject'] = "Cambio de contraseña"
+        content = render_to_string('cuenta/reset_correo.html' ,{
+            'usuario':usuario,
+            'link':'http://{}/firstlogin'.format(URL),
+            })
+        # Adjuntamos el texto
+        mensaje.attach(MIMEText(content, 'html'))
+
+        # Envio del mensaje
+        mailServer.sendmail("pruebatpi5@gmail.com",
+                            correo,
+                            mensaje.as_string())
+
+        print('correo enviado ')
+    except Exception as e:
+        print(e)
 # Create your views here.
 
 
@@ -113,5 +143,21 @@ def first_loguearse(request):
         context = {}
         return render(request, 'cuenta/firts_login.html', context)
 
+    else:
+        return redirect('inicio')
+
+def reset_password(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            if Cuenta.objects.filter(email =email).exists():
+                p = Cuenta.objects.get(email = email)
+                usuario = p.nombre
+                send_email_reset(request,email,usuario)
+                return render(request,'cuenta/envio_correo.html')
+            else:
+                return render(request, 'cuenta/reset.html')
+        else:
+            return render(request,'cuenta/reset.html')
     else:
         return redirect('inicio')
