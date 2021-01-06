@@ -5,7 +5,7 @@ from watchAll.models import Video, Favoritos, VerMasTarde
 from cuenta.models import Cuenta
 from watchAll.forms import RecursoForm
 from django.db.models import Q
-from django.views.generic import UpdateView, DeleteView, ListView
+from django.views.generic import UpdateView, DeleteView, ListView, TemplateView
 from django.urls import reverse_lazy
 
 
@@ -129,6 +129,10 @@ class VideosPersonales(ListView):
 
     def get_queryset(self):
         return Video.objects.filter(usuario_id=self.request.user.id).order_by('-fechaPublicacion')[:10]
+
+
+class VistaPrincipal(TemplateView):
+    template_name = 'principal.html'
 
 
 class EditarVideo(UpdateView):

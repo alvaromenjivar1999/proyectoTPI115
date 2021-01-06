@@ -3,7 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.listar_videos, name='inicio'),
+    path('', views.VistaPrincipal.as_view(), name='principal'),
+    path('inicio', views.listar_videos, name='inicio'),
     path('recurso/', views.agregar_recurso, name='agregarRecurso'),
     path('editar/<int:pk>', views.EditarVideo.as_view(), name='editarRecurso'),
     path('eliminar/<int:pk>', views.EliminarVideo.as_view(), name='eliminarRecurso'),
