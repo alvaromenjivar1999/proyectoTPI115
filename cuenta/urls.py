@@ -8,4 +8,6 @@ urlpatterns = [
     path('logout/', views.cerrarSesion, name='logout'),
     path('firstlogin/', views.first_loguearse, name='first_loguearse'),
     path('reset/', views.reset_password, name='reset'),
+    path('new/<str:token>/', views.reset_new_password, name='password'),
+
 ]

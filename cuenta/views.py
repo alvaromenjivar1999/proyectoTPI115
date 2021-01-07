@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from cuenta.forms import registroUsuario
+from cuenta.forms import registroUsuario,reset
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -12,6 +12,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from django.template.loader import render_to_string
 from proyectoTPI115  import settings
+import uuid
 
 
 #funcion para enviar correo 
@@ -48,6 +49,9 @@ def send_email(request,correo,usuario):
         print(e)
 
 def send_email_reset(request,correo,usuario):
+    use = Cuenta.objects.get(email = correo)
+    use.token = uuid.uuid4()
+    use.save()
     try:
         URL = settings.DOMINIO if not settings.DEBUG else request.META['HTTP_HOST']
         # Establecemos conexion con el servidor smtp de gmail
@@ -57,7 +61,8 @@ def send_email_reset(request,correo,usuario):
         print(mailServer.ehlo())
         mailServer.login("pruebatpi5@gmail.com", "tpiues115")
         print('conectado..')
-
+        token = Cuenta.objects.get(email = correo)
+        print()
         # Construimos el mensaje simple
         mensaje = MIMEMultipart()
         mensaje['From'] = "pruebatpi5@gmail.com"
@@ -65,7 +70,7 @@ def send_email_reset(request,correo,usuario):
         mensaje['Subject'] = "Cambio de contraseña"
         content = render_to_string('cuenta/reset_correo.html' ,{
             'usuario':usuario,
-            'link':'http://{}/firstlogin'.format(URL),
+            'link':'http://{}/new/{}/'.format(URL,str(token.token)),
             })
         # Adjuntamos el texto
         mensaje.attach(MIMEText(content, 'html'))
@@ -139,7 +144,7 @@ def first_loguearse(request):
                 return redirect('inicio')
             else:
                 messages.error(request, 'Usuario o contraseña incorrecta')
-
+                return render(request, 'cuenta/firts_login.html', context)
         context = {}
         return render(request, 'cuenta/firts_login.html', context)
 
@@ -159,5 +164,28 @@ def reset_password(request):
                 return render(request, 'cuenta/reset.html')
         else:
             return render(request,'cuenta/reset.html')
+    else:
+        return redirect('inicio')
+
+def reset_new_password(request,token):
+    if not request.user.is_authenticated:
+        if Cuenta.objects.filter(token=token).exists():
+            form = reset()
+            if  request.method == 'POST':
+                password = request.POST.get('password1')
+                password2 = request.POST.get('password2')
+                if password == password2:
+                    usuario = Cuenta.objects.get( token = token)
+                    usuario.set_password(password)
+                    usuario.save()
+                    messages.error(request,'su contraseña a sido actiualizada')
+                    return render(request,'cuenta/login.html')
+                else:
+                    messages.error(request,'las contraseñas deben ser iguales')
+                    return render(request, 'cuenta/reset_password.html', {'form': form})
+            else:
+                return render(request, 'cuenta/reset_password.html', {'form': form})
+        else:
+            return render(request, 'cuenta/login.html')
     else:
         return redirect('inicio')

@@ -47,3 +47,24 @@ class registroUsuario(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+class reset(UserCreationForm):
+    password1 = forms.CharField(label = 'Contraseña', widget = forms.PasswordInput(
+        attrs = {
+            'class' : 'form-control',
+            'placeholder' : 'Ingrese su nueva contraseña',
+            'id' : 'password1',
+            'required' : 'required',
+        }
+    ))
+    password2 = forms.CharField(label = 'Confirmar contraseña', widget = forms.PasswordInput(
+        attrs = {
+            'class' : 'form-control',
+            'placeholder' : 'confirmar la nueva contraseña',
+            'id' : 'password2',
+            'required' : 'required',
+        }
+    ))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

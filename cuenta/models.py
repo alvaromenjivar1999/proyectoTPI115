@@ -44,7 +44,7 @@ class Cuenta(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    token = models.UUIDField(primary_key=False, editable=False,default=uuid.uuid4)
+    token = models.UUIDField(primary_key=False, editable=False,null=True)
     USERNAME_FIELD = 'email'
 
     objects = gestionarCuenta()
