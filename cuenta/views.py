@@ -6,13 +6,19 @@ from django.contrib.auth import authenticate, login, logout
 
 def registrar(request):
     if not request.user.is_authenticated:
+<<<<<<< HEAD
         form = RegistroUsuario()
 
         if request.method == 'POST':
             form = RegistroUsuario(request.POST)
+=======
+        form = registroUsuario()
+        if request.method == 'POST':
+            form = registroUsuario(request.POST)
+            messages.warning(request,'hasta a qui')
+>>>>>>> Jp
             if form.is_valid():
                 form.save()
-                messages.success(request)
                 return redirect('loguearse')
 
         context = {'form': form}
