@@ -1,22 +1,17 @@
 from django.shortcuts import render, redirect
-from cuenta.forms import RegistroUsuario
+from cuenta.forms import registroUsuario
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 
 def registrar(request):
     if not request.user.is_authenticated:
-<<<<<<< HEAD
-        form = RegistroUsuario()
 
-        if request.method == 'POST':
-            form = RegistroUsuario(request.POST)
-=======
         form = registroUsuario()
         if request.method == 'POST':
             form = registroUsuario(request.POST)
             messages.warning(request,'hasta a qui')
->>>>>>> Jp
+
             if form.is_valid():
                 form.save()
                 return redirect('loguearse')

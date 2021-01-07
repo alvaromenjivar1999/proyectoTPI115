@@ -1,11 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from cuenta.models import Cuenta
 from django import forms
-<<<<<<< HEAD
 
-
-class RegistroUsuario(UserCreationForm):
-=======
 from django.forms import CharField, Form
 
 
@@ -26,7 +22,6 @@ class registroUsuario(UserCreationForm):
             'required' : 'required',
         }
     ))
->>>>>>> Jp
     class Meta:
         model = Cuenta
         fields = [
