@@ -19,7 +19,7 @@
     <table>
         <td><a href="{% url 'agregarALista' video.id 1 %}" class="btn btn-dark">+ Favorito</a></td>
         <td><a href="{% url 'agregarALista' video.id 2 %}" class="btn btn-dark">+ Ver mas tarde</a></td>
-        <td><button class="btn btn-success">Descargar video</button></td>
+        <td><a href="https://www.ssyoutube.com/watch?v={{video.recurso}}" target="_blank" class="btn btn-success">Descargar video</a></td>
     </table>
 </div>
 {% endblock %}
