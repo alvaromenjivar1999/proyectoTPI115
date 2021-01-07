@@ -1,9 +1,11 @@
+from time import gmtime, strftime
+
 from django.shortcuts import render, redirect
 from watchAll.models import Video, Favoritos, VerMasTarde
 from cuenta.models import Cuenta
 from watchAll.forms import RecursoForm
 from django.db.models import Q
-from django.views.generic import UpdateView, DeleteView, ListView
+from django.views.generic import UpdateView, DeleteView, ListView, TemplateView
 from django.urls import reverse_lazy
 
 
@@ -99,20 +101,35 @@ def agregar_recurso(request):
             form = RecursoForm(request.POST)
             if form.is_valid():
                 if "www.youtube.com/watch?v" in form.cleaned_data.get('recurso'):
+<<<<<<< HEAD
                     nuevo_Recurso = Video(
                         nombre=form.cleaned_data.get('nombre'),
                         fechaPublicacion=form.cleaned_data.get('fechaPublicacion'),
+=======
+                    fechaActual = strftime("%Y-%m-%d", gmtime())
+                    nuevo_Recurso = Video(
+                        nombre=form.cleaned_data.get('nombre'),
+>>>>>>> pruebaMerge
                         categoria=form.cleaned_data.get('categoria'),
                         palabraClave=form.cleaned_data.get('palabraClave'),
                     )
                     nuevo_Recurso = form.save(commit=False)
                     nuevo_Recurso.usuario = Cuenta.objects.get(
                         id=request.user.id)
+<<<<<<< HEAD
+=======
+                    nuevo_Recurso.fechaPublicacion = fechaActual
+>>>>>>> pruebaMerge
                     nuevo_Recurso.recurso = str(form.cleaned_data.get('recurso')).split("=")[1]
                     nuevo_Recurso.save()
                     return redirect('inicio')
                 else:
+<<<<<<< HEAD
                     return redirect('favoritos')
+=======
+                    context = {'form': form, 'error': 'No ingresaste correctamente el enlace de youtube'}
+                    return render(request, 'agregarRecurso.html', context)
+>>>>>>> pruebaMerge
         context = {'form': form}
         return render(request, 'agregarRecurso.html', context)
 
@@ -126,6 +143,10 @@ class VideosPersonales(ListView):
 
     def get_queryset(self):
         return Video.objects.filter(usuario_id=self.request.user.id).order_by('-fechaPublicacion')[:10]
+
+
+class VistaPrincipal(TemplateView):
+    template_name = 'principal.html'
 
 
 class EditarVideo(UpdateView):

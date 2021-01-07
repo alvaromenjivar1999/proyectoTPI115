@@ -34,7 +34,8 @@ def loguearse(request):
                 login(request, usuario)
                 return redirect('inicio')
             else:
-                messages.error(request, 'Usuario o contraseña incorrecta')
+                context = {'error': 'Usuario o contraseña incorrecta'}
+                return render(request, 'cuenta/login.html', context)
 
         context = {}
         return render(request, 'cuenta/login.html', context)

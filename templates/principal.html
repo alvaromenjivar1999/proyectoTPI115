@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 style="color: green;">Bienvenido a WatchAll!</h1>
+    <br>
+
+
+    <div data-aos="fade-left" class="d-flex justify-content-center" >
+        <h2 style="padding-right: 1%;">Puedes encontrar el contenido segun categoria, palabra clave y titulo!</h2>
+        <img class="img-responsive" src="{% static 'browser.png' %}">
+    </div>
+    <br>
+    <div data-aos="fade-right" class="d-flex justify-content-center" >
+        <h2 style="padding-right: 1%;">Puedes reproducir e indicar si un video es favorito</h2>
+        <img class="img-responsive" src="{% static 'vector.png' %}">
+    </div>
+    <br>
+    <div data-aos="fade-left" class="d-flex justify-content-center" >
+        <h2 style="padding-right: 1%;">WatchAll es una comunidad</h2>
+        <img class="img-responsive" src="{% static 'amigos.png' %}">
+    </div>
+    <br>
+    <h3><a href="{% url 'registrar' %}">Registrate</a> para ser parte de esta gran comunidad, es gratis</h3>
+</div>
+{% endblock %}
