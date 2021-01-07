@@ -7,13 +7,12 @@
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.recurso }}?rel=0&autoplay=1" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
     <p>Video agregado por: {{ video.usuario }}</p>
     <p>Fecha: {{ video.fechaPublicacion }}</p>
-<<<<<<< HEAD
+
     <table>
         <td><a href="{% url 'agregarALista' video.id 1 %}" class="btn btn-dark">+ Favorito</a></td>
         <td><a href="{% url 'agregarALista' video.id 2 %}" class="btn btn-dark">+ Ver mas tarde</a></td>
         <td><button class="btn btn-success">Descargar video</button></td>
     </table>
-=======
->>>>>>> Jp
+
 </div>
 {% endblock %}
