@@ -28,7 +28,7 @@ def descarga(request, video_url, video_id):
 def agregrar_video_lista(request, video_id, tipo):
     if request.user.is_authenticated:
         if tipo == 1:
-            if Favoritos.objects.all().exists():
+            if Favoritos.objects.filter(usuario=request.user).exists():
                 video = Video.objects.get(id=video_id)
                 favoritos = Favoritos.objects.get(usuario=request.user)
                 favoritos.videos.add(video)
@@ -42,7 +42,7 @@ def agregrar_video_lista(request, video_id, tipo):
                 return redirect('favoritos')
 
         elif tipo == 2:
-            if VerMasTarde.objects.all().exists():
+            if VerMasTarde.objects.filter(usuario=request.user).exists():
                 video = Video.objects.get(id=video_id)
                 ver_mas_tarde = VerMasTarde.objects.get(usuario=request.user)
                 ver_mas_tarde.videos.add(video)
