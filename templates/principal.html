@@ -3,7 +3,8 @@
 {% block title %}Registro de usuario{% endblock %}
 {% block content %}
 <div class="container">
-    <h1 style="color: green;">Bienvenido a WatchAll!</h1>
+    <h1 style="color: green;">Bienvenido a WatchAll</h1>
+    <h2 style="color: green;">Donde lo veras todo!</h2>
     <br>
 
 
@@ -20,6 +21,10 @@
     <div data-aos="fade-left" class="d-flex justify-content-center" >
         <h2 style="padding-right: 1%;">WatchAll es una comunidad</h2>
         <img class="img-responsive" src="{% static 'amigos.png' %}">
+    </div>
+    <br>
+    <div data-aos="fade-right" class="d-flex justify-content-center" >
+        <img width="600px" class="img-responsive" src="{% static 'logoHD.png' %}">
     </div>
     <br>
     <h3><a href="{% url 'registrar' %}">Registrate</a> para ser parte de esta gran comunidad, es gratis</h3>
