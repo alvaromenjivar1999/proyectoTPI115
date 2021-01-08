@@ -1,0 +1,1 @@
+web: gunicorn proyectoTPI115.wsgi
