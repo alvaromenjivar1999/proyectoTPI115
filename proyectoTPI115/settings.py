@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'proyectoTPI115.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES['default'] = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
         )
@@ -134,4 +134,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DOMINIO = '' 
 
-DATABASES = ''
