@@ -14,4 +14,5 @@ urlpatterns = [
     path('remove/<int:video_id>/<int:tipo>', views.eliminar_video_lista, name='removerALista'),
     path('masTarde/', views.ver_mas_tarde, name='masTarde'),
     path('ver/<int:video_id>', views.ver_video, name='ver_video'),
+    path('descargaVideo/<str:video_url>/<int:video_id>', views.descarga, name='descarga_video'),
 ]

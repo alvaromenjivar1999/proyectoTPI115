@@ -7,6 +7,7 @@ from watchAll.forms import RecursoForm
 from django.db.models import Q
 from django.views.generic import UpdateView, DeleteView, ListView, TemplateView
 from django.urls import reverse_lazy
+from pytube import YouTube as YT
 
 
 def ver_video(request, video_id):
@@ -17,6 +18,12 @@ def ver_video(request, video_id):
     else:
         return redirect('loguearse')
 
+def descarga(request, video_url, video_id):
+    if request.user.is_authenticated:
+        YT("www.youtube.com/watch?v="+video_url).streams.first().download()
+        return redirect('inicio')
+    else:
+        return redirect('loguearse') 
 
 def agregrar_video_lista(request, video_id, tipo):
     if request.user.is_authenticated:
