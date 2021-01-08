@@ -183,7 +183,7 @@ def reset_new_password(request,token):
                     usuario.set_password(password)
                     usuario.save()
                     messages.error(request,'su contraseña a sido actiualizada')
-                    return render(request,'cuenta/login.html')
+                    return redirect('loguearse')
                 else:
                     messages.error(request,'las contraseñas deben ser iguales')
                     return render(request, 'cuenta/reset_password.html', {'form': form})
