@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<br>
+<div style="padding-top: 2%; padding-bottom: 10%;">
+    <div data-aos="flip-up" class="d-flex justify-content-center" >
+        <img class="img-responsive" src="{% static 'logo2.png' %}">
+    </div>
+    <br>
+<div class="d-flex justify-content-center">
+    <h3 id="form-title">Inicio de sesion</h3>
+</div>
+<div class="d-flex justify-content-center form_container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div data-aos="fade" class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+</svg></span>
+            </div>
+            <input type="text" name="email" placeholder="Correo electronico..." class="form-control">
+        </div>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button class="btn btn-primary" type="submit"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+              </svg> Enviar correo</button>
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %}
+

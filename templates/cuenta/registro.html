@@ -10,7 +10,7 @@
 <div class="col-5">
     {% if form.errors %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert" >
-    {{ form.errors }}  
+    {{ form.errors }}
     </div>
 {% endif %}
 <form method="POST" id = "registro_form" action="">
@@ -27,10 +27,12 @@
     {{ form.sexo }}
     Contraseña
     {{ form.password1 }}
-    Cinfirmar Contraseña
+    Confirmar Contraseña
     {{ form.password2 }}
 <div class="d-flex justify-content-center mt-3 login_container">
-    <input class="btn btn-primary col-6 " type="submit" name="Crear cuenta">
+    <button class="btn btn-primary col-6 " type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+      </svg>  Enviar</button>
 </div>
 </form>
     <div class="d-flex justify-content-center links">
